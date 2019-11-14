@@ -67,14 +67,31 @@ $ pip3 --version
 pip 18.1 from /usr/lib/python3/dist-packages/pip (python 3.7)
 ```
 
-Install west:
+Get west:
 
 ```
 $ pip3 install --user -U west
 $ echo 'export PATH=~/.local/bin:"$PATH"' >> ~/.bashrc
 $ source ~/.bashrc
+$ west --version
+
+West version: v0.6.3
 ```
 
+Get zephyr source code:
+
+```
+$ cd ~
+$ west init zephyrproject
+$ cd zephyrproject
+$ west update
+```
+
+Get the required python tools:
+
+```
+$ pip3 install --user -r ~/zephyrproject/zephyr/scripts/requirements.txt
+```
 
 <br/><br/>
 
@@ -83,7 +100,7 @@ $ source ~/.bashrc
 Check the latest stable SDK version first:
 - https://www.zephyrproject.org/developers/#downloads
 - 0.10.3 is the latest as of today
-- The size is about 2GB
+- The size is about 1GB
  
 Download it:
 
@@ -110,3 +127,21 @@ To apply the variables:
 ```
 $ source ~/.bashrc
 ```
+
+<br/><br/>
+
+## Build the blinky application
+
+Source the variables (this can be added to bashrc):
+
+```
+$ cd ~/zephyrproject/zephyr
+$ source zephyr-env.sh
+```
+
+Then build:
+
+```
+# west build -p auto -b <your-board-name> samples/basic/blinky
+```
+
