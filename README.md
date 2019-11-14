@@ -109,7 +109,7 @@ $ pip3 install --user -r ~/zephyrproject/zephyr/scripts/requirements.txt
 Check the latest stable SDK version first:
 - https://www.zephyrproject.org/developers/#downloads
 - 0.10.3 is the latest as of today
-- The size is about 1GB
+- The size is about 1.1GB
  
 Download it:
 
@@ -120,7 +120,7 @@ $ wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.10.3/ze
 Run the SDK installer:
 
 ```
-$ chmod +x zephyr-sdk-0.10.3-setup.run
+$ chmod 744 zephyr-sdk-0.10.3-setup.run
 # ./zephyr-sdk-0.10.3-setup.run -- -d ~/zephyr-sdk-0.10.3
 ```
 
