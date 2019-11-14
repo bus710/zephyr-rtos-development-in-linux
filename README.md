@@ -165,18 +165,16 @@ Apply the variables:
 $ source ~/.bashrc
 ```
 
-Then build:
+Then build the project:
+- the result as bin and elf files will be created in:
+- ~/zephyrproject/zephyr/samples/basic/blinky/build/zephyr
 
 ```
 $ cd ~/zephyrproject/zephyr/samples/basic/blinky
 $ west build -p auto -b nrf52_pca10040 .
 ```
-
-The result will be generated in:
-- ~/zephyrproject/zephyr/samples/basic/blinky/build/zephyr
-- bin and elf can be found in the directory
-
-To flash the generated image: 
+  
+To flash the generated image to a connected board: 
 
 ```
 $ west flash 
