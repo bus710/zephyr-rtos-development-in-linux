@@ -49,7 +49,7 @@ Please install the nRF SDK and tools based on the first link and follow the step
 
 ## 1. Linux dependencies
 
-Install these:
+Install some packages:
 
 ```
 $ sudo apt-get install --no-install-recommends \
@@ -59,7 +59,7 @@ $ sudo apt-get install --no-install-recommends \
     xz-utils file make gcc gcc-multilib
 ```
 
-Check the version:
+Check the versions (should be newer than these):
 
 ```
 $ cmake --version
