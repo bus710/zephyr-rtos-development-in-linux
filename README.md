@@ -168,22 +168,27 @@ $ source ~/.bashrc
 Then build:
 
 ```
-$ cd ~/zephyrproject/zephyr
-$ west build -p auto -b nrf52_pca10040 samples/basic/blinky
+$ cd ~/zephyrproject/zephyr/samples/basic/blinky
+$ west build -p auto -b nrf52_pca10040 .
 ```
 
 The result will be generated in:
-- ~/zephyrproject/zephyr/build/zephyr
+- ~/zephyrproject/zephyr/samples/basic/blinky/build/zephyr
 - bin and elf can be found in the directory
 
 To flash the generated image: 
 
 ```
-$ cd ~/zephyrproject/zephyr
 $ west flash 
 
 ...
 -- runners.nrfjprog: Board with serial number 682347313 flashed successfully.
+```
+
+(Option) To clean the built images:
+
+```
+$ west build -b nrf52_pca10040 -t clean
 ```
 
 <br/><br/>
