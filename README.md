@@ -121,7 +121,10 @@ Run the SDK installer:
 
 ```
 $ chmod 744 zephyr-sdk-0.10.3-setup.run
-# ./zephyr-sdk-0.10.3-setup.run -- -d ~/zephyr-sdk-0.10.3
+$ ./zephyr-sdk-0.10.3-setup.run -- -d ~/zephyr-sdk-0.10.3
+
+...
+Success installing SDK. SDK is ready to be used.
 ```
 
 Since the extracted files are stored in **~/zephyr-sdk-0.10.3**, put these in bashrc or so:
@@ -164,7 +167,22 @@ $ source ~/.bashrc
 Then build:
 
 ```
+$ cd ~/zephyrproject/zephyr
 $ west build -p auto -b nrf52_pca10040 samples/basic/blinky
+```
+
+The result will be generated in:
+- ~/zephyrproject/zephyr/build/zephyr
+- bin and elf can be found in the directory
+
+To flash the generated image: 
+
+```
+$ cd ~/zephyrproject/zephyr
+$ west flash 
+
+...
+-- runners.nrfjprog: Board with serial number 682347313 flashed successfully.
 ```
 
 <br/><br/>
@@ -173,4 +191,5 @@ $ west build -p auto -b nrf52_pca10040 samples/basic/blinky
 
 ## What's next
 
-TBD
+At this point, using an IDE and actual coding might be the next steps.  
+Hope this happens anytime soon.
