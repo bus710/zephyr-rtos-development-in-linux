@@ -1,4 +1,4 @@
-# zephyr-rtos-development-in-linux
+# Zephyr RTOS Development in Linux
 
 Zephyr is an RTOS for IoT projects.  
 This repo is a walkthrough to prepare Zephyr development environment for nRF52 devices in Ubuntu.
