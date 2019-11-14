@@ -40,6 +40,7 @@ This repo is a walkthrough to prepare Zephyr development environment for nRF52 d
 - [Application development](https://docs.zephyrproject.org/latest/application/index.html#application)
 - [Overview: nRF52832 + zephyr](https://docs.zephyrproject.org/latest/boards/arm/nrf52_pca10040/doc/index.html)
 - [JLink for nRF52](https://docs.zephyrproject.org/latest/guides/tools/nordic_segger.html#nordic-segger-flashing)
+- [Nice explanation for debuggers](https://interrupt.memfault.com/blog/a-deep-dive-into-arm-cortex-m-debug-interfaces)
 
 Please install the nRF SDK and tools based on the first link and follow the steps in this doc.
 
