@@ -11,7 +11,7 @@ This repo is a walkthrough to prepare Zephyr development environment for nRF52 d
 - Reference
 - Contents
     1. Linux dependencies
-    2. Get zephyr source code
+    2. Get zephyr source code and tools
     3. Get zephyr SDK
     4. Build the blinky application for nRF52832-DK
 - What's next 
@@ -87,20 +87,18 @@ West version: v0.6.3
 ```
 <br/><br/>
 
-## 2. Get zephyr source code
+## 2. Get zephyr source code and tools
 
-The size is about 600~700MB.
+Here each step downloads many files from the internet:
+- the source code in west initializing is about 600~700MB
+- the objects in west updating is about 300MB
+- the packages in pip3 installing is about 100MB
 
 ```
 $ cd ~
 $ west init zephyrproject
 $ cd zephyrproject
 $ west update
-```
-
-Get the required python tools:
-
-```
 $ pip3 install --user -r ~/zephyrproject/zephyr/scripts/requirements.txt
 ```
 
