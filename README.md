@@ -191,5 +191,10 @@ $ west flash
 
 ## What's next
 
-At this point, using an IDE and actual coding might be the next steps.  
-Hope this happens anytime soon.
+The application doc introduces the basic work flow:
+- https://docs.zephyrproject.org/latest/application/index.html#
+  
+Also, there are tips in the user and developer guide:
+- https://docs.zephyrproject.org/latest/guides/index.html
+
+Good luck!
