@@ -9,6 +9,12 @@ This repo is a walkthrough to prepare Zephyr development environment for nRF52 d
 
 - Prerequisites
 - Reference
+- Contents
+    1. Linux dependencies
+    2. Get zephyr source code
+    3. Get zephyr SDK
+    4. Build the blinky application for nRF52832-DK
+- What's next 
 
 <br/><br/>
 
@@ -39,7 +45,9 @@ Please install the nRF SDK and tools based on the first link and follow the step
 
 <br/><br/>
 
-## Linux dependencies
+---
+
+## 1. Linux dependencies
 
 Install these:
 
@@ -77,8 +85,11 @@ $ west --version
 
 West version: v0.6.3
 ```
+<br/><br/>
 
-Get zephyr source code:
+## 2. Get zephyr source code
+
+The size is about 600~700MB.
 
 ```
 $ cd ~
@@ -95,7 +106,7 @@ $ pip3 install --user -r ~/zephyrproject/zephyr/scripts/requirements.txt
 
 <br/><br/>
 
-## Get zephyr SDK
+## 3. Get zephyr SDK
 
 Check the latest stable SDK version first:
 - https://www.zephyrproject.org/developers/#downloads
@@ -128,20 +139,40 @@ To apply the variables:
 $ source ~/.bashrc
 ```
 
-<br/><br/>
-
-## Build the blinky application
-
-Source the variables (this can be added to bashrc):
+Get an udev rule file for oopenocd:
 
 ```
-$ cd ~/zephyrproject/zephyr
-$ source zephyr-env.sh
+$ sudo cp ${ZEPHYR_SDK_INSTALL_DIR}/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
+
+$ sudo udevadm control --reload
+```
+
+<br/><br/>
+
+## 4. Build the blinky application
+
+Add this to bashrc:
+
+```
+source ~/zephyrproject/zephyr/zephyr-env.sh
+```
+
+Apply the variables:
+
+```
+$ source ~/.bashrc
 ```
 
 Then build:
 
 ```
-# west build -p auto -b <your-board-name> samples/basic/blinky
+$ west build -p auto -b nrf52_pca10040 samples/basic/blinky
 ```
 
+<br/><br/>
+
+---
+
+## What's next
+
+TBD
