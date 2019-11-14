@@ -33,4 +33,9 @@ This repo is a walkthrough to prepare Zephyr development environment for nRF52 d
 - [Application development](https://docs.zephyrproject.org/latest/application/index.html#application)
 - [Overview for nRF52832 + zephyr](https://docs.zephyrproject.org/latest/boards/arm/nrf52_pca10040/doc/index.html)
 
+Please install the nRF SDK and tools based on the first link and follow the steps in this doc.
+
 <br/><br/>
+
+## Linux dependencies
+
