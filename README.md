@@ -206,6 +206,9 @@ To create the launch.json file in VSCODE,
 - press **CTRL+SHIFT+P** 
 - use the **Debug: Open launch.json**
 - choose the **Cortex-Debug**
+- follow one of the below options
+
+### 5.1 For Jlink GDB host and the on board probe
 
 Paste this for the launch.json for Cortex-Debug extension:
 
@@ -233,6 +236,49 @@ Paste this for the launch.json for Cortex-Debug extension:
 
 To start debugging, press the F5 key twice.  
 However, this may not support RTOS-awareness.
+
+<br/><br/>
+
+### 5.2 For Openocd GDB host and the on board probe
+
+Install openocd first:
+
+```
+$ sudo apt install openocd
+$ openocd -v
+
+Open On-Chip Debugger 0.10.0
+```
+
+Paste this for the launch.json for Cortex-Debug extension:
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Zephyr nRF52832 openocd",
+            "cwd": "${workspaceRoot}",
+            "executable": "build/zephyr/zephyr.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "device": "nrf52832_xxaa",
+            "targetId": "nrf52",
+            "boardId": "",
+            "armToolchainPath": "${HOME}/zephyr-sdk-0.10.3/arm-zephyr-eabi/bin",
+            "interface": "swd",
+            "gdbpath": "/usr/bin/gdb-multiarch",
+             "configFiles": [
+                 "/usr/share/openocd/scripts/board/nordic_nrf52_dk.cfg"
+            ]
+        },
+    ]
+}
+```
+
+To start debugging, press the F5 key twice.  
 
 <br/><br/>
 
