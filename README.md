@@ -290,6 +290,9 @@ To start debugging, press the F5 key twice.
 
 The application doc introduces the basic work flow:
 - https://docs.zephyrproject.org/latest/application/index.html#
+
+In the same doc, there is a section that describes to make a custom system:
+- https://docs.zephyrproject.org/latest/application/index.html#custom-board-devicetree-and-soc-definitions
   
 Also, there are tips in the user and developer guide:
 - https://docs.zephyrproject.org/latest/guides/index.html
