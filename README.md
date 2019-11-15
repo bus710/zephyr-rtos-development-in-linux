@@ -14,6 +14,7 @@ This repo is a walkthrough to prepare Zephyr development environment for nRF52 d
     2. Get zephyr source code and tools
     3. Get zephyr SDK
     4. Build the blinky application for nRF52832-DK
+    5. Debug the blinky app in VSCODE
 - What's next 
 
 <br/><br/>
@@ -41,6 +42,7 @@ This repo is a walkthrough to prepare Zephyr development environment for nRF52 d
 - [Overview: nRF52832 + zephyr](https://docs.zephyrproject.org/latest/boards/arm/nrf52_pca10040/doc/index.html)
 - [JLink for nRF52](https://docs.zephyrproject.org/latest/guides/tools/nordic_segger.html#nordic-segger-flashing)
 - [Nice explanation for debuggers](https://interrupt.memfault.com/blog/a-deep-dive-into-arm-cortex-m-debug-interfaces)
+- [nRF52 development with VSCODE/Cortex-debug](https://electronut.in/visual-studio-code-nrf52-dev/)
 
 Please install the nRF SDK and tools based on the first link and follow the steps in this doc.
 
@@ -188,6 +190,49 @@ $ west flash
 ```
 $ west build -b nrf52_pca10040 -t clean
 ```
+
+<br/><br/>
+
+## 5. Debug the blinky app in VSCODE
+
+Open the blinky app in VSCODE: 
+
+```
+$ cd ~/zephyrproject/zephyr/samples/basic/blinky
+$ code .
+```
+
+To create the launch.json file in VSCODE,
+- press **CTRL+SHIFT+P** 
+- use the **Debug: Open launch.json**
+- choose the **Cortex-Debug**
+
+Paste this for the launch.json for Cortex-Debug extension:
+
+```json
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Zephyr nRF52832",
+            "cwd": "${workspaceRoot}",
+            "executable": "build/zephyr/zephyr.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "device": "nrf52832_xxaa",
+            "targetId": "nrf52",
+            "boardId": "",
+            "armToolchainPath": "${HOME}/zephyr-sdk-0.10.3/arm-zephyr-eabi/bin",
+            "interface": "swd",
+            "gdbpath": "/usr/bin/gdb-multiarch",
+        },
+    ]
+}
+```
+
+To start debugging, press the F5 key twice.  
+However, this may not support RTOS-awareness.
 
 <br/><br/>
 
