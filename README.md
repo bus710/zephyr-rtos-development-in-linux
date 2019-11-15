@@ -208,6 +208,8 @@ To create the launch.json file in VSCODE,
 - choose the **Cortex-Debug**
 - follow one of the below options
 
+<br/><br/>
+
 ### 5.1 For Jlink GDB host and the on board probe
 
 Paste this for the launch.json for Cortex-Debug extension:
