@@ -170,6 +170,7 @@ $ source ~/.bashrc
 Then build the project:
 - the result as bin and elf files will be created in:
 - ~/zephyrproject/zephyr/samples/basic/blinky/build/zephyr
+- run this one time and use the flash sub command for short
 
 ```
 $ cd ~/zephyrproject/zephyr/samples/basic/blinky
@@ -189,6 +190,12 @@ $ west flash
 
 ```
 $ west build -b nrf52_pca10040 -t clean
+```
+
+(Option) To erase the flash memory (+UICR) of the target:
+
+```
+$ west flash --erase
 ```
 
 <br/><br/>
