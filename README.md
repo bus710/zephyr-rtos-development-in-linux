@@ -106,8 +106,13 @@ $ sudo apt --fix-broken install
 
 ## 2. Get JLink package
 
+We can download some software tools from Nordic semiconductor:
+- JLinkExe is required to use JLink
+- nrfjprog is specifically requried to work with nRF chips
+
 Download nRF5x-Command-Line-Tools for Linux 64 bit from:
-- https://www.nordicsemi.com
+- https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Command-Line-Tools/Download#infotabs
+- (if the above link doesn't work) https://www.nordicsemi.com > Software and Tools > Development tools > nRF command line tools. Please pick the OS (Linux 64) and download.
 
 Run these commands to install the tools:
 
