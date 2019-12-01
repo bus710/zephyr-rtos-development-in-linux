@@ -258,7 +258,7 @@ $ west flash --erase
 
 First, install VSCODE:
 - https://code.visualstudio.com/download
-- Don't forget to install **Cortex-Debug** extension
+- Don't forget to install **Cortex-Debug** and **C/C++** extension
 
 Open the blinky app in VSCODE: 
 
@@ -268,7 +268,7 @@ $ code .
 ```
 
 To create the launch.json file in VSCODE,
-- press **CTRL+SHIFT+P** 
+- press **CTRL + SHIFT + P** 
 - use the **Debug: Open launch.json**
 - choose the **Cortex-Debug**
 - follow one of the below options
