@@ -59,9 +59,8 @@ $ sudo apt update
 $ sudo apt install build-essential \
                     git \
                     libncurses5 \
-                    gdb-multiarch
-
-$ sudo apt install gcc-arm-none-eabi
+                    gdb-multiarch \
+                    gcc-arm-none-eabi
 
 $ sudo apt-get install --no-install-recommends \
     git cmake ninja-build gperf \
