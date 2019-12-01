@@ -11,10 +11,11 @@ This repo is a walkthrough to prepare Zephyr development environment for nRF52 d
 - Reference
 - Contents
     1. Linux dependencies
-    2. Get zephyr source code and tools
-    3. Get zephyr SDK
-    4. Build the blinky application for nRF52832-DK
-    5. Debug the blinky app in VSCODE
+    2. Get JLink package
+    3. Get zephyr source code and tools
+    4. Get zephyr SDK
+    5. Build the blinky application for nRF52832-DK
+    6. Debug the blinky app in VSCODE
 - What's next 
 
 <br/><br/>
@@ -44,8 +45,6 @@ This repo is a walkthrough to prepare Zephyr development environment for nRF52 d
 - [Nice explanation for debuggers](https://interrupt.memfault.com/blog/a-deep-dive-into-arm-cortex-m-debug-interfaces)
 - [nRF52 development with VSCODE/Cortex-debug](https://electronut.in/visual-studio-code-nrf52-dev/)
 
-Please install the nRF SDK and tools based on the first link and follow the steps in this doc.
-
 <br/><br/>
 
 ---
@@ -55,6 +54,15 @@ Please install the nRF SDK and tools based on the first link and follow the step
 Install some packages:
 
 ```
+$ sudo apt update
+
+$ sudo apt install build-essential \
+                    git \
+                    libncurses5 \
+                    gdb-multiarch
+
+$ sudo apt install gcc-arm-none-eabi
+
 $ sudo apt-get install --no-install-recommends \
     git cmake ninja-build gperf \
     ccache dfu-util device-tree-compiler wget \
@@ -88,9 +96,51 @@ $ west --version
 
 West version: v0.6.3
 ```
+
+(Optional) Do this if ncurses installation shows some error:
+
+```
+$ sudo apt --fix-broken install 
+```
+
 <br/><br/>
 
-## 2. Get zephyr source code and tools
+## 2. Get JLink package
+
+Download nRF5x-Command-Line-Tools for Linux 64 bit from:
+- https://www.nordicsemi.com
+
+Run these commands to install the tools:
+
+```
+$ tar xvf nRF-Command-Line-Tools_10_4_1_Linux-amd64.tar.gz
+$ sudo dpkg -i JLink_Linux_V650b_x86_64.deb
+$ sudo dpkg -i nRF-Command-Line-Tools_10_4_1_Linux-amd64.deb
+```
+
+To check the version of installed tools:
+
+```
+$ nrfjprog -v
+
+nrfjprog version: 10.4.1 
+JLinkARM.dll version: 6.50b
+
+$ mergehex -v
+
+mergehex version: 10.4.1
+
+$ JLinkExe -v
+
+SEGGER J-Link Commander V6.50b (Compiled Sep  6 2019 17:46:52)
+DLL version V6.50b, compiled Sep  6 2019 17:46:40
+
+Unknown command line option -h. (<= Don't worry about this)
+```
+
+<br/><br/>
+
+## 3. Get zephyr source code and tools
 
 Here each step downloads many files from the internet:
 - the source code in west initializing is about 600~700MB
@@ -107,7 +157,7 @@ $ pip3 install --user -r ~/zephyrproject/zephyr/scripts/requirements.txt
 
 <br/><br/>
 
-## 3. Get zephyr SDK
+## 4. Get zephyr SDK
 
 Check the latest stable SDK version first:
 - https://www.zephyrproject.org/developers/#downloads
@@ -153,7 +203,7 @@ $ sudo udevadm control --reload
 
 <br/><br/>
 
-## 4. Build the blinky application
+## 5. Build the blinky application
 
 Add this to bashrc:
 
@@ -200,7 +250,7 @@ $ west flash --erase
 
 <br/><br/>
 
-## 5. Debug the blinky app in VSCODE
+## 6. Debug the blinky app in VSCODE
 
 Open the blinky app in VSCODE: 
 
@@ -217,7 +267,7 @@ To create the launch.json file in VSCODE,
 
 <br/><br/>
 
-### 5.1 For Jlink GDB host and the on board probe
+### 6.1 For Jlink GDB host and the on board probe
 
 Paste this for the launch.json for Cortex-Debug extension:
 
@@ -248,7 +298,7 @@ However, this may not support RTOS-awareness.
 
 <br/><br/>
 
-### 5.2 For Openocd GDB host and the on board probe
+### 6.2 For Openocd GDB host and the on board probe
 
 Install openocd first:
 
