@@ -58,6 +58,7 @@ $ sudo apt update
 
 $ sudo apt install build-essential \
                     git \
+                    openocd \
                     libncurses5 \
                     gdb-multiarch \
                     gcc-arm-none-eabi
@@ -71,7 +72,15 @@ $ sudo apt-get install --no-install-recommends \
 
 Check the versions (should be newer than these):
 
-```
+``` 
+$ arm-none-eabi-gcc -v
+
+gcc version 7.3.1 20180622 ...
+
+$ openocd 
+
+Open On-Chip Debugger 0.10.0
+
 $ cmake --version
 
 cmake version 3.13.4
@@ -307,15 +316,6 @@ However, this may not support RTOS-awareness.
 <br/><br/>
 
 ### 6.2 For Openocd GDB host and the on board probe
-
-Install openocd first:
-
-```
-$ sudo apt install openocd
-$ openocd -v
-
-Open On-Chip Debugger 0.10.0
-```
 
 Paste this for the launch.json for Cortex-Debug extension:
 
