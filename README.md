@@ -197,7 +197,7 @@ To apply the variables:
 $ source ~/.bashrc
 ```
 
-Get an udev rule file for oopenocd:
+Get an udev rule file for openocd:
 
 ```
 $ sudo cp ${ZEPHYR_SDK_INSTALL_DIR}/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
@@ -255,6 +255,10 @@ $ west flash --erase
 <br/><br/>
 
 ## 6. Debug the blinky app in VSCODE
+
+First, install VSCODE:
+- https://code.visualstudio.com/download
+- Don't forget to install **Cortex-Debug** extension
 
 Open the blinky app in VSCODE: 
 
