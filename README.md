@@ -174,7 +174,7 @@ $ pip3 install --user -r ~/zephyrproject/zephyr/scripts/requirements.txt
 
 Check the latest stable SDK version first:
 - https://www.zephyrproject.org/developers (just to see news)
-- https://github.com/zephyrproject-rtos/sdk-ng (to see the SDK version)
+- https://github.com/zephyrproject-rtos/sdk-ng/releases (to see the SDK version)
 - 0.10.3 is the latest as of today
 - The size is about 1.1GB
  
