@@ -49,10 +49,12 @@ This repo is a walkthrough to prepare Zephyr development environment for Raspber
 - [Detailed explanation for debuggers](https://interrupt.memfault.com/blog/a-deep-dive-into-arm-cortex-m-debug-interfaces)
 - [Hackster.io tutorial part 1](https://www.hackster.io/cdwilson/zephyr-rtos-on-raspberry-pi-pico-2-part-1-cf39f0)
 
-Datasheets:
+Datasheets for Pico and Pico W:
 - [Pico](https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf)
 - [Pico W](https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf)
 
+Zephyr Project Documentation (PDF)
+- https://docs.zephyrproject.org/latest/zephyr.pdf
 
 <br/><br/>
 
