@@ -13,6 +13,7 @@ In general the official [getting started guide](https://docs.zephyrproject.org/l
 ## Docs
 
 In 2020, I wrote this doc for nRF52
+- It is outdated as of 2025. Please follow the Connect SDK from Nordic Semi.
 - [nRF52 + Zephyr in 2020](./2020_nrf52.md)
 
 In 2025, I wrote this doc for Pico W

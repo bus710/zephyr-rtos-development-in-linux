@@ -15,12 +15,13 @@ This repo is a walkthrough to prepare Zephyr development environment for Raspber
 - Prerequisites
 - Reference
 - Contents
-    1. Linux dependencies
-    2. Get zephyr source code and tools
-    3. Get zephyr SDK
-    4. Build the blinky application for target
-    5. Get JLink package
-    6. Debug the blinky app in VSCODE
+    1. Install dependencies
+    2. Get Zephyr and install Python dependencies
+    3. Install the Zephyr SDK
+    4. Build the Blinky Sample and Flash the Sample
+    5. Get JLink
+    6. Wire the probe and the board
+    7. Debug the blinky app in VSCODE
 - What's next 
 
 <br/><br/>
@@ -29,13 +30,12 @@ This repo is a walkthrough to prepare Zephyr development environment for Raspber
 
 - Pico W or Pico 2 W
 - Debian testing or Ubuntu 25.04 on a PC
-- JLink (nice to have)
+- JLink (nice to have for debugging)
 
 <br/><br/>
 
 ## Reference
 
-- [nRF development in linux](https://github.com/bus710/nrf-development-in-linux)
 - [Home page](https://zephyrproject.org)
 - [Documents](https://docs.zephyrproject.org/latest/)
 - [Introduction](https://docs.zephyrproject.org/latest/introduction/index.html#project-resources)
@@ -45,184 +45,152 @@ This repo is a walkthrough to prepare Zephyr development environment for Raspber
 - [Samples and demos](https://docs.zephyrproject.org/latest/samples/index.html#samples-and-demos)
 - [Application development](https://docs.zephyrproject.org/latest/application/index.html#application)
 - [Supported boards](https://docs.zephyrproject.org/latest/boards/index.html#)
+- [Rpi pico](https://docs.zephyrproject.org/latest/boards/raspberrypi/rpi_pico/doc/index.html)
 - [Detailed explanation for debuggers](https://interrupt.memfault.com/blog/a-deep-dive-into-arm-cortex-m-debug-interfaces)
+- [Hackster.io tutorial part 1](https://www.hackster.io/cdwilson/zephyr-rtos-on-raspberry-pi-pico-2-part-1-cf39f0)
+
+Datasheets:
+- [Pico](https://datasheets.raspberrypi.com/pico/pico-datasheet.pdf)
+- [Pico W](https://datasheets.raspberrypi.com/picow/pico-w-datasheet.pdf)
+
 
 <br/><br/>
 
 ---
 
-## 1. Linux dependencies
+## 1. Install dependencies
 
 Install some packages:
-
-```
+```sh
 $ sudo apt update
-
-$ sudo apt install build-essential \
-                    git \
-                    openocd \
-                    libncurses5 \
-                    gdb-multiarch \
-                    gcc-arm-none-eabi
-
-$ sudo apt-get install --no-install-recommends \
+$ sudo apt install --no-install-recommends \
     git cmake ninja-build gperf \
     ccache dfu-util device-tree-compiler wget \
-    python3-pip python3-setuptools python3-tk python3-wheel \
-    xz-utils file make gcc gcc-multilib
+    python3-dev python3-pip python3-setuptools python3-tk python3-wheel \
+    xz-utils file make gcc gcc-multilib \
+    g++-multilib libsdl2-dev libmagic1
+
+$ sudo apt install -y \
+    picocom
 ```
 
 Check the versions (should be newer than these):
-
-``` 
-$ arm-none-eabi-gcc -v
-
-gcc version 7.3.1 20180622 ...
-
-$ openocd 
-
-Open On-Chip Debugger 0.10.0
-
+```sh
 $ cmake --version
+cmake version 3.31.6
 
-cmake version 3.13.4
+$ python3 --version
+Python 3.13.2
 
 $ dtc --version
-
-Version: DTC 1.4.7
-
-$ pip3 --version
-
-pip 18.1 from /usr/lib/python3/dist-packages/pip (python 3.7)
-```
-
-Get west:
-
-```
-$ pip3 install --user -U west
-$ echo 'export PATH=~/.local/bin:"$PATH"' >> ~/.bashrc
-$ source ~/.bashrc
-$ west --version
-
-West version: v0.6.3
-```
-
-(Optional) Do this if ncurses installation shows some error:
-
-```
-$ sudo apt --fix-broken install 
+Version: DTC 1.7.2
 ```
 
 <br/><br/>
 
-## 2. Get zephyr source code and tools
+## 2. Get Zephyr and install Python dependencies
 
-Here each step downloads many files from the internet:
-- the source code in west initializing is about 600~700MB
-- the objects in west updating is about 300MB
-- the packages in pip3 installing is about 100MB
+```sh
+$ sudo apt install python3-venv
+$ python3 -m venv ~/zephyrproject/.venv
 
-```
-$ cd ~
-$ west init zephyrproject
-$ cd zephyrproject
+# This should be called per new terminal
+$ source ~/zephyrproject/.venv/bin/activate 
+
+$ pip install west
+$ west init ~/zephyrproject
+$ cd ~/zephyrproject
 $ west update
-$ pip3 install --user -r ~/zephyrproject/zephyr/scripts/requirements.txt
+$ west zephyr-export
+$ west packages pip --install
+```
+
+Add an alias for the venv activation in `bashrc` or `zshrc`:
+```sh
+alias za="source ~/zephyrproject/.venv/bin/activate"
 ```
 
 <br/><br/>
 
-## 3. Get zephyr SDK
+## 3. Install the Zephyr SDK
 
-Check the latest stable SDK version first:
-- https://www.zephyrproject.org/developers (just to see news)
-- https://github.com/zephyrproject-rtos/sdk-ng/releases (to see the SDK version)
-- 0.10.3 is the latest as of today
-- The size is about 1.1GB
- 
-Download it:
-
-```
-$ wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.10.3/zephyr-sdk-0.10.3-setup.run
-```
-
-Run the SDK installer:
-
-```
-$ chmod 744 zephyr-sdk-0.10.3-setup.run
-$ ./zephyr-sdk-0.10.3-setup.run -- -d ~/zephyr-sdk-0.10.3
-
-...
-Success installing SDK. SDK is ready to be used.
-```
-
-Since the extracted files are stored in **~/zephyr-sdk-0.10.3**, put these in bashrc or so:
-
-```
-export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
-export ZEPHYR_SDK_INSTALL_DIR=$HOME/zephyr-sdk-0.10.3
-```
-
-To apply the variables:
-
-```
-$ source ~/.bashrc
-```
-
-Get an udev rule file for openocd:
-
-```
-$ sudo cp ${ZEPHYR_SDK_INSTALL_DIR}/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
-
-$ sudo udevadm control --reload
+Install the 32 bit ARM compiler and tools:
+```sh
+$ cd ~/zephyrproject/zephyr
+$ west sdk install \
+    -d ~/zephyrproject/sdk \
+    -t arm-zephyr-eabi
 ```
 
 <br/><br/>
 
-## 4. Build the blinky application
+## 4. Build the Blinky Sample and Flash the Sample
 
-Add this to bashrc:
+Build the sample:
+```sh
+$ cd ~/zephyrproject/zephyr
 
-```
-source ~/zephyrproject/zephyr/zephyr-env.sh
-```
+# It returns related board names.
+$ west boards -n pico 
 
-Apply the variables:
+# Build with the target MCU specified.
+$ west build -p always -b rpi_pico/rp2040 samples/basic/blinky
 
-```
-$ source ~/.bashrc
-```
-
-Then build the project:
-- the result as bin and elf files will be created in:
-- ~/zephyrproject/zephyr/samples/basic/blinky/build/zephyr
-- run this one time and use the flash sub command for short
-
-```
-$ cd ~/zephyrproject/zephyr/samples/basic/blinky
-$ west build -p auto -b nrf52_pca10040 .
-```
-  
-To flash the generated image to a connected board: 
-
-```
-$ west flash 
-
-...
--- runners.nrfjprog: Board with serial number 682347313 flashed successfully.
+# pico and pico w have different LED port connections.
+# pico uses the GPIO 25
+# pico w uses the cyw43's pin to control the LED, so this example doesn't work.
 ```
 
-(Option) To clean the built images:
+Flash the sample into the target (make sure the devices is mounted as a disk drive):
+```sh
+$ west flash -r uf2
+```
 
-```
-$ west build -b nrf52_pca10040 -t clean
+### If the `west flash` doesn't work...
+
+What is happening here is, there is no JTAG probe connected between the host and target, so OpenOCD cannot find the target.
+
+For now, we can do the usual drag-drop method:
+- The image file is created in `$HOME/zephyrproject/zephyr/build/zephyr/zephyr.uf2`. 
+- Unplug the board, press the reset button, plug it again to the host.
+- The board will appear as `RPI-RP2` drive. Mount it.
+- Drag the uf2 file from a file browser and drop it in the `RPI-RP2` disk.
+
+
+<br/><br/>
+
+## 4b. Build the Hello World Sample and Flash the Sample
+
+west build -p always -b rpi_pico2/rp2350a/m33 -S cdc-acm-console samples/basic/blinky -- -DCONFIG_USB_DEVICE_INITIALIZE_AT_BOOT=y
+
+Build the sample:
+```sh
+$ cd ~/zephyrproject/zephyr
+
+# It returns related board names.
+$ west boards -n pico 
+
+# Build with the target MCU specified.
+$ west build -p always -b rpi_pico/rp2040/w \
+    -S cdc-acm-console \
+    samples/hello_world \
+    -- -DCONFIG_USB_DEVICE_INITIALIZE_AT_BOOT=y
 ```
 
-(Option) To erase the flash memory (+UICR) of the target:
+Flash the sample into the target (make sure the devices is mounted as a disk drive):
+```sh
+$ west flash -r uf2
+```
 
+Check the output:
+```sh
+$ picocom /dev/ttyACM0
 ```
-$ west flash --erase
-```
+
+
+
+
+
 
 <br/><br/>
 
@@ -274,7 +242,11 @@ Unknown command line option -h. (<= Don't worry about this)
 
 <br/><br/>
 
-## 6. Debug the blinky app in VSCODE
+## 6. Wire the probe and the board
+
+<br/><br/>
+
+## 7. Debug the blinky app in VSCODE
 
 First, install VSCODE:
 - https://code.visualstudio.com/download
