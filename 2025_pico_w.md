@@ -71,7 +71,8 @@ $ sudo apt install --no-install-recommends \
     g++-multilib libsdl2-dev libmagic1
 
 $ sudo apt install -y \
-    picocom
+    picocom \
+    minicom
 ```
 
 Check the versions (should be newer than these):
@@ -156,6 +157,9 @@ $ west flash -r uf2
 Check the output:
 ```sh
 $ picocom /dev/ttyACM0
+
+# or
+$ minicom -b 115200 -o -D /dev/ttyACM0
 ```
 
 <br/><br/>
