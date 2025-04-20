@@ -124,42 +124,7 @@ $ west sdk install \
 
 <br/><br/>
 
-## 4. Build the Blinky Sample and Flash the Sample
-
-Build the sample:
-```sh
-$ cd ~/zephyrproject/zephyr
-
-# It returns related board names.
-$ west boards -n pico 
-
-# Build with the target MCU specified.
-$ west build -p always -b rpi_pico/rp2040 samples/basic/blinky
-
-# pico and pico w have different LED port connections.
-# pico uses the GPIO 25
-# pico w uses the cyw43's pin to control the LED, so this example doesn't work.
-```
-
-Flash the sample into the target (make sure the devices is mounted as a disk drive):
-```sh
-$ west flash -r uf2
-```
-
-### If the `west flash` doesn't work...
-
-What is happening here is, there is no JTAG probe connected between the host and target, so OpenOCD cannot find the target.
-
-For now, we can do the usual drag-drop method:
-- The image file is created in `$HOME/zephyrproject/zephyr/build/zephyr/zephyr.uf2`. 
-- Unplug the board, press the reset button, plug it again to the host.
-- The board will appear as `RPI-RP2` drive. Mount it.
-- Drag the uf2 file from a file browser and drop it in the `RPI-RP2` disk.
-
-
-<br/><br/>
-
-## 4b. Build the Hello World Sample and Flash the Sample
+## 4a. Build the Hello World Sample and Flash the Sample
 
 west build -p always -b rpi_pico2/rp2350a/m33 -S cdc-acm-console samples/basic/blinky -- -DCONFIG_USB_DEVICE_INITIALIZE_AT_BOOT=y
 
@@ -170,7 +135,13 @@ $ cd ~/zephyrproject/zephyr
 # It returns related board names.
 $ west boards -n pico 
 
-# Build with the target MCU specified.
+# Build for the pico.
+$ west build -p always -b rpi_pico/rp2040 \
+    -S cdc-acm-console \
+    samples/hello_world \
+    -- -DCONFIG_USB_DEVICE_INITIALIZE_AT_BOOT=y
+
+# Build for the pico w.
 $ west build -p always -b rpi_pico/rp2040/w \
     -S cdc-acm-console \
     samples/hello_world \
@@ -186,6 +157,33 @@ Check the output:
 ```sh
 $ picocom /dev/ttyACM0
 ```
+
+<br/><br/>
+
+## 4b. Build the Blinky Sample and Flash the Sample
+
+Build the sample:
+```sh
+$ cd ~/zephyrproject/zephyr
+
+# It returns related board names.
+$ west boards -n pico 
+
+# Build for the pico.
+$ west build -p always -b rpi_pico/rp2040 samples/basic/blinky
+```
+
+Flash the sample into the target (make sure the devices is mounted as a disk drive):
+```sh
+$ west flash -r uf2
+```
+
+:warning: Pico W doesn't have a direct connection with the on board LED but the cyw43 is connected with the LED. So this blinky sample doesn't work for Pico W.
+
+<br/><br/>
+
+
+
 
 
 
