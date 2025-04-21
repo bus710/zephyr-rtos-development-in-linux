@@ -18,10 +18,12 @@ This repo is a walkthrough to prepare Zephyr development environment for Raspber
     1. Install dependencies
     2. Get Zephyr and install Python dependencies
     3. Install the Zephyr SDK
-    4. Build the Blinky Sample and Flash the Sample
-    5. Get JLink
-    6. Wire the probe and the board
-    7. Debug the blinky app in VSCODE
+    4. Samples
+        a. Build the Hello World Sample and Flash the Sample
+        b. Build the Blinky Sample and Flash the Sample
+    5. (TBD) Get JLink
+    6. (TBD) Wire the probe and the board
+    7. (TBD) Debug the blinky app in VSCODE
 - What's next 
 
 <br/><br/>
@@ -196,161 +198,5 @@ $ west flash -r uf2
 
 
 
-<br/><br/>
-
-The contents below are not yet completed.  
-Please ignore.  
-
-<br/><br/>
-
-
-
-
-## 5. Get JLink package
-
-We can download some software tools from Nordic semiconductor:
-- JLinkExe is required to use JLink
-- nrfjprog is specifically requried to work with nRF chips
-
-Download nRF5x-Command-Line-Tools for Linux 64 bit from:
-- https://www.nordicsemi.com/Software-and-tools/Development-Tools/nRF-Command-Line-Tools/Download#infotabs
-- (if the above link doesn't work) https://www.nordicsemi.com > Software and Tools > Development tools > nRF command line tools. Please pick the OS (Linux 64) and download.
-
-Run these commands to install the tools:
-
-```
-$ tar xvf nRF-Command-Line-Tools_10_4_1_Linux-amd64.tar.gz
-$ sudo dpkg -i JLink_Linux_V650b_x86_64.deb
-$ sudo dpkg -i nRF-Command-Line-Tools_10_4_1_Linux-amd64.deb
-```
-
-To check the version of installed tools:
-
-```
-$ nrfjprog -v
-
-nrfjprog version: 10.4.1 
-JLinkARM.dll version: 6.50b
-
-$ mergehex -v
-
-mergehex version: 10.4.1
-
-$ JLinkExe -v
-
-SEGGER J-Link Commander V6.50b (Compiled Sep  6 2019 17:46:52)
-DLL version V6.50b, compiled Sep  6 2019 17:46:40
-
-Unknown command line option -h. (<= Don't worry about this)
-```
-
-<br/><br/>
-
-## 6. Wire the probe and the board
-
-<br/><br/>
-
-## 7. Debug the blinky app in VSCODE
-
-First, install VSCODE:
-- https://code.visualstudio.com/download
-- Don't forget to install **Cortex-Debug** and **C/C++** extension
-
-Open the blinky app in VSCODE: 
-
-```
-$ cd ~/zephyrproject/zephyr/samples/basic/blinky
-$ code .
-```
-
-To create the launch.json file in VSCODE,
-- press **CTRL + SHIFT + P** 
-- use the **Debug: Open launch.json**
-- choose the **Cortex-Debug**
-- follow one of the below options
-
-<br/><br/>
-
-### 6.1 For Jlink GDB host and the on board probe
-
-Paste this for the launch.json for Cortex-Debug extension:
-
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Zephyr nRF52832",
-            "cwd": "${workspaceRoot}",
-            "executable": "build/zephyr/zephyr.elf",
-            "request": "launch",
-            "type": "cortex-debug",
-            "servertype": "jlink",
-            "device": "nrf52832_xxaa",
-            "targetId": "nrf52",
-            "boardId": "",
-            "armToolchainPath": "${HOME}/zephyr-sdk-0.10.3/arm-zephyr-eabi/bin",
-            "interface": "swd",
-            "gdbpath": "/usr/bin/gdb-multiarch",
-        },
-    ]
-}
-```
-
-To start debugging, press the F5 key twice.  
-However, this may not support RTOS-awareness.
-
-<br/><br/>
-
-### 6.2 For Openocd GDB host and the on board probe
-
-Paste this for the launch.json for Cortex-Debug extension:
-
-```json
-{
-    "version": "0.2.0",
-    "configurations": [
-
-        {
-            "name": "Zephyr nRF52832 openocd",
-            "cwd": "${workspaceRoot}",
-            "executable": "build/zephyr/zephyr.elf",
-            "request": "launch",
-            "type": "cortex-debug",
-            "servertype": "openocd",
-            "device": "nrf52832_xxaa",
-            "targetId": "nrf52",
-            "boardId": "",
-            "armToolchainPath": "${HOME}/zephyr-sdk-0.10.3/arm-zephyr-eabi/bin",
-            "interface": "swd",
-            "gdbpath": "/usr/bin/gdb-multiarch",
-             "configFiles": [
-                 "/usr/share/openocd/scripts/board/nordic_nrf52_dk.cfg"
-            ]
-        },
-    ]
-}
-```
-
-To start debugging, press the F5 key twice.  
-
-<br/><br/>
-
----
-
-## What's next
-
-The application doc introduces the basic work flow:
-- https://docs.zephyrproject.org/latest/application/index.html#
-
-In the same doc, there is a section that describes to make a custom system:
-- https://docs.zephyrproject.org/latest/application/index.html#custom-board-devicetree-and-soc-definitions
-  
-Also, there are tips in the user and developer guide:
-- https://docs.zephyrproject.org/latest/guides/index.html
-
-Good luck!
-
-<br/>
 
 [Go to README](./README.md)
